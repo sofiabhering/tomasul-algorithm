@@ -8,4 +8,4 @@ class Instructuion:
         self.imm = imm
 
     def toString(self):
-        return self.name + ' ' + self.dest + ' ' + self.r1 + ' ' + self.imm + ' ' + self.r2
+        return str(self.name) + ' ' + str(self.dest) + ' ' + str(self.r1) + ' ' + str(self.imm) + ' ' + str(self.r2)

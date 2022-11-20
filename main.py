@@ -41,6 +41,7 @@ def createInstructionQueue(arq):
 
 
 def issue(instruction):
+    global instrucoes
     op = instruction.name
     r = 0
     if op in ["ADD", "SUB", "MUL", "DIV"]:
@@ -106,6 +107,7 @@ def issue(instruction):
 
     reservationStation[r].exec = -1
     reservationStation[r].op = op
+    instrucoes += 1
 
 
 def simular_execucao(inst):
@@ -126,13 +128,14 @@ def simular_execucao(inst):
 
 
 def write():
+    global instrucoes,register
     for unit in addUnit:
         if unit.busy and reservationStation[unit.inst].exec == 0:
             v = simular_execucao(unit.inst)
-            for register in register:
-                if register.Qi == unit.inst:
-                    register.Qi = None
-                    register.value = v
+            for reg in register:
+                if reg.Qi == unit.inst:
+                    reg.Qi = None
+                    reg.value = v
             for rs in reservationStation:
                 if rs.Qj == unit.inst:
                     rs.Vj = v
@@ -147,10 +150,10 @@ def write():
     for unit in mulUnit:  # Se ocupado e não está executando
         if unit.busy and reservationStation[unit.inst].exec == 0:
             v = simular_execucao(unit.inst)
-            for register in register:
-                if register.Qi == unit.inst:
-                    register.Qi = None
-                    register.value = v
+            for reg in register:
+                if reg.Qi == unit.inst:
+                    reg.Qi = None
+                    reg.value = v
             for rs in reservationStation:
                 if rs.Qj == unit.inst:
                     rs.Vj = v
@@ -173,10 +176,10 @@ def write():
                         memory.Qi = None
                         memory.value = v
             else:
-                for register in register:
-                    if register.Qi == unit.inst:
-                        register.Qi = None
-                        register.value = v
+                for reg in register:
+                    if reg.Qi == unit.inst:
+                        reg.Qi = None
+                        reg.value = v
             for rs in reservationStation:
                 if rs.Qj == unit.inst:
                     rs.Vj = v
@@ -236,6 +239,22 @@ def executarInstrucoes():
             else:
                 reservationStation[rsMulI].exec = 25
         rsMulI = ((rsMulI + 1) % 16) + 16
+        
+        if reservationStation[rsLdI].busy and reservationStation[rsLdI].exec == -1 and reservationStation[rsLdI].Vj != None:
+            if not ldUnit[0].busy:
+                ldUnit[0].inst = rsLdI
+                ldUnit[0].busy = True
+            elif not ldUnit[1].busy:
+                ldUnit[1].inst = rsLdI
+                ldUnit[1].busy = True
+            elif not ldUnit[2].busy:
+                ldUnit[2].inst = rsLdI
+                ldUnit[2].busy = True
+            else:
+                break
+            # setar o clock da operação todas levam 5 de clock para serem concluidas
+            reservationStation[rsLdI].exec = 5
+        rsLdI = ((rsLdI + 1) % 16) + 32
 
 
 def escreverSaida():
@@ -260,17 +279,22 @@ def escreverSaida():
 
 
 def menu():
-    global clock
+    global clock, instrucoes
     print("Implementação do Algoritmo de Tomasulo")
     arq = open("in.txt")
     iq = createInstructionQueue(arq)
-
     for i in iq:
-        escreverSaida()
-        issue(i)
+        print(i.toString())
+    exit
+    
+    issue(iq.pop(0))
+    while instrucoes > 0: 
         write()
         executarInstrucoes()
+        escreverSaida()
         clock += 1
+        if iq != []: 
+            issue(iq.pop(0))
 
 
 def main():
