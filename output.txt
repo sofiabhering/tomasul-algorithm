@@ -1,0 +1,33 @@
+================================================================================
+Clock: 0
+ Name  | BUSY  | Clock |   OP   |   Vj  |   Vk  |   Qj  |   Qk  |   A   |
+================================================================================
+Clock: 1
+ Name  | BUSY  | Clock |   OP   |   Vj  |   Vk  |   Qj  |   Qk  |   A   |
+LOA 32 | True  | -1    | 'LW'   | 0     | None  | None  | None  | 30    |
+================================================================================
+Clock: 2
+ Name  | BUSY  | Clock |   OP   |   Vj  |   Vk  |   Qj  |   Qk  |   A   |
+LOA 32 | True  | -1    | 'LW'   | 0     | None  | None  | None  | 30    |
+LOA 33 | True  | -1    | 'LW'   | 0     | None  | None  | None  | 4     |
+================================================================================
+Clock: 3
+ Name  | BUSY  | Clock |   OP   |   Vj  |   Vk  |   Qj  |   Qk  |   A   |
+MUL 16 | True  | -1    | 'MUL'  | None  | 0     | 33    | None  | None  |
+LOA 32 | True  | -1    | 'LW'   | 0     | None  | None  | None  | 30    |
+LOA 33 | True  | -1    | 'LW'   | 0     | None  | None  | None  | 4     |
+================================================================================
+Clock: 4
+ Name  | BUSY  | Clock |   OP   |   Vj  |   Vk  |   Qj  |   Qk  |   A   |
+ADD  0 | True  | -1    | 'SUB'  | None  | None  | 32    | 33    | None  |
+MUL 16 | True  | -1    | 'MUL'  | None  | 0     | 33    | None  | None  |
+LOA 32 | True  | -1    | 'LW'   | 0     | None  | None  | None  | 30    |
+LOA 33 | True  | -1    | 'LW'   | 0     | None  | None  | None  | 4     |
+================================================================================
+Clock: 5
+ Name  | BUSY  | Clock |   OP   |   Vj  |   Vk  |   Qj  |   Qk  |   A   |
+ADD  0 | True  | -1    | 'SUB'  | None  | None  | 32    | 33    | None  |
+MUL 16 | True  | -1    | 'MUL'  | None  | 0     | 33    | None  | None  |
+MUL 17 | True  | -1    | 'DIV'  | None  | None  | 16    | 32    | None  |
+LOA 32 | True  | -1    | 'LW'   | 0     | None  | None  | None  | 30    |
+LOA 33 | True  | -1    | 'LW'   | 0     | None  | None  | None  | 4     |

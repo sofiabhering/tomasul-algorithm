@@ -5,11 +5,14 @@ from Color import COLOR
 
 # Função que interpreta o arquivo de entrada
 # Separa as intruções em uma lista
+
+
 def interpretador(file):
     instrucoes = []
     for line in file:
         instrucoes.append(line.replace(',', '').split())
     return instrucoes
+
 
 def menu():
     print(COLOR.HEADER+"=== Algoritmo de Tomasulo ==="+COLOR.ENDC)
@@ -19,9 +22,10 @@ def menu():
     print("- Rafael Lopes Murta")
     print("- Yan Silva Dumont")
     print(COLOR.OKBLUE+"=========== Configurações: ============"+COLOR.ENDC)
-    
+
     debug = input("- Debug? (s/n) - Enter para não: ")
-    status_avancado = input("- Status avançado? [Mostrar Registradores e Celulas de Memoria] (s/n) - Enter para não: ")
+    status_avancado = input(
+        "- Status avançado? [Mostrar Registradores e Celulas de Memoria] (s/n) - Enter para não: ")
     arquivo = input("- Arquivo de entrada? - Enter para o testes/input.txt: ")
 
     debug = debug.lower()
@@ -39,8 +43,8 @@ def menu():
         status_avancado = False
 
     if(arquivo == ""):
-        arquivo = "testes/input.txt"
-
+        
+        arquivo = "tomasulo-new/input.txt"
 
     try:
         inputFile = open(arquivo)
@@ -52,10 +56,10 @@ def menu():
     Tomasulo(instrucoes, debug, status_avancado).run()
 
 
-
 # Função Main
 def main():
     menu()
+
 
 if __name__ == "__main__":
     main()

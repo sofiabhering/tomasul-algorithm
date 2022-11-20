@@ -8,11 +8,12 @@ from Mostradores import Mostradores
 # Arit ["ADD", "SUB", "MUL", "DIV"]
 # Memoria ["LW", "SW"]
 
+
 class Tomasulo(Mostradores):
     def __init__(self, instList, debug, status_avancado):
         self.debug = debug
         self.status_avancado = status_avancado
-        self.arquivoSaida = open("resultados/output.txt", "w")
+        self.arquivoSaida = open("tomasulo-new/resultados/output.txt", "w")
 
         self.pc = 0
         self.clock = 0
