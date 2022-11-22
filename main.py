@@ -1,20 +1,17 @@
 import sys
 from Architecture.instQueue import Instructuion
-from ReservationStation import ReservationStation
-from Register import Register
-from DataMemory import DataMemory
-from FunctionalUnit import FunctionalUnit
-from collections import deque
+from Architecture.ReservationStation import ReservationStation
+from Architecture.Register import Register
+from Architecture.DataMemory import DataMemory
+from Architecture.FunctionalUnit import FunctionalUnit
 
-global pc, clock, instrucoes, lock, rsAddI, rsMulI, rsLdI, filaDespacho, addUnit, mulUnit, ldUnit, memory, register, reservationStation, arquivoSaida
-pc = 0
+global clock, instrucoes, rsAddI, rsMulI, rsLdI, addUnit, mulUnit, ldUnit, memory, register, reservationStation, arquivoSaida
+
 clock = 0
 instrucoes = 0
-lock = False
-rsAddI = 0
-rsMulI = 16
+rsAddI = 0  
+rsMulI = 16  
 rsLdI = 32
-filaDespacho = deque()
 arquivoSaida = open("output.txt", "w")
 addUnit = [FunctionalUnit() for i in range(3)]
 mulUnit = [FunctionalUnit() for i in range(3)]
@@ -276,7 +273,12 @@ def escreverSaida():
         if reservationStation[i].busy:
             arquivoSaida.write("LOA {:2d} | {!r:5} | {!r:5} | {!r:6s} | {!r:5} | {!r:5} | {!r:5} | {!r:5} | {!r:5} |\n".format(
                 i, reservationStation[i].busy, reservationStation[i].exec, reservationStation[i].op, reservationStation[i].Vj, reservationStation[i].Vk, reservationStation[i].Qj, reservationStation[i].Qk, reservationStation[i].A))
-
+    
+    arquivoSaida.write("\nRegistradores:\n")
+    arquivoSaida.write("Reg | Qi | Value\n")
+    for i in range(len(register)):
+        arquivoSaida.write("{:3d} | {!r:5} | {:3d} \n".format(i, register[i].Qi, register[i].value))
+    
 
 def menu():
     global clock, instrucoes
@@ -297,9 +299,5 @@ def menu():
             issue(iq.pop(0))
 
 
-def main():
-    menu()
 
-
-if __name__ == "__main__":
-    main()
+menu()
