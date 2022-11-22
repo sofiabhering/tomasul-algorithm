@@ -125,7 +125,7 @@ def simular_execucao(inst):
 
 
 def write():
-    global instrucoes,register
+    global instrucoes, register
     for unit in addUnit:
         if unit.busy and reservationStation[unit.inst].exec == 0:
             v = simular_execucao(unit.inst)
@@ -236,7 +236,7 @@ def executarInstrucoes():
             else:
                 reservationStation[rsMulI].exec = 25
         rsMulI = ((rsMulI + 1) % 16) + 16
-        
+
         if reservationStation[rsLdI].busy and reservationStation[rsLdI].exec == -1 and reservationStation[rsLdI].Vj != None:
             if not ldUnit[0].busy:
                 ldUnit[0].inst = rsLdI
@@ -285,17 +285,13 @@ def menu():
     print("Implementação do Algoritmo de Tomasulo")
     arq = open("in.txt")
     iq = createInstructionQueue(arq)
-    for i in iq:
-        print(i.toString())
-    exit
-    
     issue(iq.pop(0))
-    while instrucoes > 0: 
+    while instrucoes > 0:
         write()
         executarInstrucoes()
         escreverSaida()
         clock += 1
-        if iq != []: 
+        if iq != []:
             issue(iq.pop(0))
 
 
